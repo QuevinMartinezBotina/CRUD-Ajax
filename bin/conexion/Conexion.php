@@ -22,23 +22,24 @@ class Conexion
     public function conectar()
     {
         try {
-            $CONTORLADOR = $this->configuracion["driver"];
+            $CONTROLADOR = $this->configuracion["driver"];
             $SERVIDOR = $this->configuracion["host"];
-            $BASE_DATOS  = $this->configuracion["database"];
+            $BASE_DATOS = $this->configuracion["database"];
             $PUERTO = $this->configuracion["port"];
             $USUARIO = $this->configuracion["username"];
             $CLAVE = $this->configuracion["password"];
             $CODIFICACION = $this->configuracion["charset"];
 
-            $url = "{$CONTORLADOR}:host={$SERVIDOR}:{$PUERTO};"
-                . "dbname={$BASE_DATOS};charset={$CODIFICACION}";
 
+            $url = "{$CONTROLADOR}:host={$SERVIDOR}:{$PUERTO};"
+                . "dbname={$BASE_DATOS};charset={$CODIFICACION}";
+            //Se crea la conexión.
             $this->conexion = new PDO($url, $USUARIO, $CLAVE);
 
-            echo "Conectado";
-        } catch (Exception $exec) {
-            echo $exec->getTraceAsString();
-            echo "No Conectado";
+            return $this->conexion;
+        } catch (Exception $exc) {
+
+            echo $exc->getTraceAsString();
         }
     }
 }
