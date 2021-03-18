@@ -15,6 +15,9 @@ class  Crud
         $this->tabla = $tabla;
     }
 
+    ///////////////////////////////////////////////////
+    /* -------LIST ALL DATA TABLE------------ */
+    ///////////////////////////////////////////////////
 
     public function get()
     {
@@ -33,6 +36,11 @@ class  Crud
         }
     }
 
+
+    ///////////////////////////////////////////////////
+    /* -------INSERT DATA ON THE TABLE------------ */
+    ///////////////////////////////////////////////////
+
     public function insert($obj)
     {
         try {
@@ -47,6 +55,65 @@ class  Crud
             echo $exec->getTraceAsString();
         }
     }
+
+    ///////////////////////////////////////////////////
+    /* -------UPDATE DATA OF THE TABLE------------ */
+    ///////////////////////////////////////////////////
+
+    public function update($obj)
+    {
+        try {
+            /* Aqui concatenamos el string */
+            $campos = "";
+            /* Aqui recorremos las llaves de nuestro objeto */
+            foreach ($obj as $llave => $valor) {
+                $campos .= "`$llave`=:$llave,"; //`nombres`=:nombres,`edad`=:edad
+            }
+            /* Aqui hacemos una limpieza para quitar espaciso en blanco */
+            $campos = rtrim($campos, ",");
+            $this->sql = "UPDATE {$this->tabla} SET {$campos} {$this->where}"; /* :nombre, :apellido, :edad */
+
+            /* Aqui le pasamos para hacer la verificación y ejecutarlo */
+            $filasAfectadas = $this->ejecutar($obj);
+            return $filasAfectadas;
+        } catch (Exception $exec) {
+            echo $exec->getTraceAsString();
+        }
+    }
+
+    ////////////////////////////////////////////////////
+    /* -------DELETE DATA OF THE TABLE------------ */
+    ///////////////////////////////////////////////////
+
+    public function delete()
+    {
+        try {
+            $this->sql = "DELETE FROM {$this->tabla} {$this->where}";
+            $filesAfectadas = $this->ejecutar();
+        } catch (Exception $exec) {
+            echo $exec->getTraceAsString();
+        }
+    }
+
+
+    public function where(
+        $llave,
+        $condicion,
+        $valor
+    ) {
+        $this->where .= (strpos($this->where, "WHERE")) ? " AND " : " WHERE ";
+        $this->where .= "`$llave` $condicion " . ((is_string($valor)) ? "\"$valor\"" : $valor) . " ";
+        return $this;
+    }
+
+    public function orWhere($llave, $condicion, $valor)
+    {
+        $this->where .= (strpos($this->where, "WHERE")) ? " OR " : " WHERE ";
+        $this->where .= "`$llave` $condicion " . ((is_string($valor)) ? "\"$valor\"" : $valor) . " ";
+        return $this;
+    }
+
+
 
     private function ejecutar($obj = null)
     {
