@@ -1,12 +1,19 @@
 <?php
 
-class ControladorUsuarios {
+class ControladorUsuarios extends Controller
+{
 
-    function __construct() {
-        
+    function __construct()
+    {
     }
 
-    public function insertarUsuario($usuario) {
+    public function index()
+    {
+        return $this->view("Welcome");
+    }
+
+    public function insertarUsuario($usuario)
+    {
         $usuarioModel = new Usuarios();
         $id = $usuarioModel->insert($usuario);
         $insersionExitosa = ($id > 0);
@@ -15,7 +22,8 @@ class ControladorUsuarios {
         return $respuesta;
     }
 
-    public function listarUsuarios() {
+    public function listarUsuarios()
+    {
         $usuarioModel = new Usuarios();
         $lista = $usuarioModel->get();
         $v = count($lista);
@@ -24,10 +32,11 @@ class ControladorUsuarios {
         return $respuesta;
     }
 
-    public function actualizarUsuario($usuario) {
+    public function actualizarUsuario($usuario)
+    {
         $usuarioModel = new Usuarios();
         $actualizados = $usuarioModel->where("id", "=", $usuario["idUsuario"])
-                ->update($usuario);
+            ->update($usuario);
         return [
             "codigo" => (($actualizados > 0) ? 1 : -1),
             "mensaje" => ($actualizados > 0) ? "Se ha actualizado el usuario correctamente." : "No se pudo actualizar el usuario.",
@@ -35,7 +44,8 @@ class ControladorUsuarios {
         ];
     }
 
-    public function eliminarUsuario($idUsaurio) {
+    public function eliminarUsuario($idUsaurio)
+    {
         $usuarioModel = new Usuarios();
         $eliminados = $usuarioModel->where("id", "=", $idUsaurio)->delete();
         return [
@@ -45,7 +55,8 @@ class ControladorUsuarios {
         ];
     }
 
-    public function buscarUsuarioPorId($idUsuario) {
+    public function buscarUsuarioPorId($idUsuario)
+    {
         $usuarioModel = new Usuarios();
         $usuario = $usuarioModel->where("id", "=", $idUsuario)->first();
         return [
@@ -54,5 +65,4 @@ class ControladorUsuarios {
             "datos" => $usuario
         ];
     }
-
 }
