@@ -12,6 +12,11 @@ class ControladorUsuarios extends Controller
         return $this->view("Welcome");
     }
 
+    public function formCrearUsuario()
+    {
+        return $this->view("usuarios/registrarusuario");
+    }
+
     public function insertarUsuario($usuario)
     {
         $usuarioModel = new Usuarios();

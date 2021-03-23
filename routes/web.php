@@ -8,3 +8,4 @@ Route::get("/saludame/:nombre", function ($nombre, Request $request) {
 
 Route::get("/", ControladorUsuarios::class);
 Route::get("/listar_usuarios", ControladorUsuarios::class);
+Route::get("/usuarios/form/crear", ControladorUsuarios::class . "@fromCrearUsuario");
