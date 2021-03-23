@@ -1,13 +1,11 @@
 <?php
 
-class ModeloGenerico extends Crud
-{
+class ModeloGenerico extends Crud {
 
     private $className;
     private $excluir = ["className", "tabla", "conexion", "wheres", "sql", "excluir"];
 
-    function __construct($tabla, $className, $propiedades = null)
-    {
+    function __construct($tabla, $className, $propiedades = null) {
         parent::__construct($tabla);
         $this->className = $className;
 
@@ -16,12 +14,11 @@ class ModeloGenerico extends Crud
         }
 
         foreach ($propiedades as $llave => $valor) {
-            $this->{$llave} = $valor;
+            $this->{$llaves} = $valor;
         }
     }
 
-    protected function obtenerAtributos()
-    {
+    protected function obtenerAtributos() {
         $variables = get_class_vars($this->className);
         $atributos = [];
         $max = count($variables);
@@ -33,8 +30,7 @@ class ModeloGenerico extends Crud
         return $atributos;
     }
 
-    protected function parsear($obj = null)
-    {
+    protected function parsear($obj = null) {
         try {
             $atributos = $this->obtenerAtributos();
             $objetoFinal = [];
@@ -60,8 +56,7 @@ class ModeloGenerico extends Crud
         }
     }
 
-    public function fill($obj)
-    {
+    public function fill($obj) {
         try {
             $atributos = $this->obtenerAtributos();
             foreach ($atributos as $indice => $llave) {
@@ -74,25 +69,22 @@ class ModeloGenerico extends Crud
         }
     }
 
-    public function insert($obj = null)
-    {
+    public function insert($obj = null) {
         $obj = $this->parsear($obj);
         return parent::insert($obj);
     }
 
-    public function update($obj)
-    {
+    public function update($obj) {
         $obj = $this->parsear($obj);
         return parent::update($obj);
     }
 
-    public function __get($nombreAtributo)
-    {
+    public function __get($nombreAtributo) {
         return $this->{$nombreAtributo};
     }
 
-    public function __set($nombreAtributo, $valor)
-    {
+    public function __set($nombreAtributo, $valor) {
         $this->{$nombreAtributo} = $valor;
     }
+
 }

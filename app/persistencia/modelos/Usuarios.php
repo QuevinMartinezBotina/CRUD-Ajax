@@ -1,7 +1,6 @@
 <?php
 
-class Usuarios extends ModeloGenerico
-{
+class Usuarios extends ModeloGenerico {
 
     protected $id;
     protected $nombres;
@@ -11,79 +10,64 @@ class Usuarios extends ModeloGenerico
     protected $telefono;
     protected $fecha_registro;
 
-    public function __construct($propiedades = null)
-    {
-        /* Aqui debemos colcoar el nombre de la tabal identico que la base de datos "usuario" */
+    public function __construct($propiedades = null) {
         parent::__construct("usuario", Usuarios::class, $propiedades);
     }
 
-    function getId()
-    {
+    function getId() {
         return $this->id;
     }
 
-    function getNombres()
-    {
+    function getNombres() {
         return $this->nombres;
     }
 
-    function getApellidos()
-    {
+    function getApellidos() {
         return $this->apellidos;
     }
 
-    function getEdad()
-    {
+    function getEdad() {
         return $this->edad;
     }
 
-    function getCorreo()
-    {
+    function getCorreo() {
         return $this->correo;
     }
 
-    function getTelefono()
-    {
+    function getTelefono() {
         return $this->telefono;
     }
 
-    function getFecha_registro()
-    {
+    function getFecha_registro() {
         return $this->fecha_registro;
     }
 
-    function setId($id)
-    {
+    function setId($id) {
         $this->id = $id;
     }
 
-    function setNombres($nombres)
-    {
+    function setNombres($nombres) {
         $this->nombres = $nombres;
     }
 
-    function setApellidos($apellidos)
-    {
+    function setApellidos($apellidos) {
         $this->apellidos = $apellidos;
     }
 
-    function setEdad($edad)
-    {
+    function setEdad($edad) {
         $this->edad = $edad;
     }
 
-    function setCorreo($correo)
-    {
+    function setCorreo($correo) {
         $this->correo = $correo;
     }
 
-    function setTelefono($telefono)
-    {
+    function setTelefono($telefono) {
         $this->telefono = $telefono;
     }
 
-    function setFecha_registro($fecha_registro)
-    {
+    function setFecha_registro($fecha_registro) {
         $this->fecha_registro = $fecha_registro;
     }
+
 }

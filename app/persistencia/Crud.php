@@ -1,21 +1,18 @@
 <?php
 
-class Crud
-{
+class Crud {
 
     protected $tabla;
     protected $conexion;
     protected $wheres = "";
     protected $sql = null;
 
-    public function __construct($tabla = null)
-    {
+    public function __construct($tabla = null) {
         $this->conexion = (new Conexion())->conectar();
         $this->tabla = $tabla;
     }
 
-    public function get()
-    {
+    public function get() {
         try {
             $this->sql = "SELECT * FROM {$this->tabla} {$this->wheres}";
             $sth = $this->conexion->prepare($this->sql);
@@ -26,8 +23,7 @@ class Crud
         }
     }
 
-    public function first()
-    {
+    public function first() {
         $lista = $this->get();
         if (count($lista) > 0) {
             return $lista[0];
@@ -36,8 +32,7 @@ class Crud
         }
     }
 
-    public function insert($obj)
-    {
+    public function insert($obj) {
         try {
             $campos = implode("`, `", array_keys($obj)); //nombre`, `apellido`, `edad
             $valores = ":" . implode(", :", array_keys($obj)); //:nombre, :apellido, :edad
@@ -50,8 +45,7 @@ class Crud
         }
     }
 
-    public function update($obj)
-    {
+    public function update($obj) {
         try {
             $campos = "";
             foreach ($obj as $llave => $valor) {
@@ -66,8 +60,7 @@ class Crud
         }
     }
 
-    public function delete()
-    {
+    public function delete() {
         try {
             $this->sql = "DELETE FROM {$this->tabla} {$this->wheres}";
             $filesAfectadas = $this->ejecutar();
@@ -77,22 +70,19 @@ class Crud
         }
     }
 
-    public function where($llave, $condicion, $valor)
-    {
+    public function where($llave, $condicion, $valor) {
         $this->wheres .= (strpos($this->wheres, "WHERE")) ? " AND " : " WHERE ";
         $this->wheres .= "`$llave` $condicion " . ((is_string($valor)) ? "\"$valor\"" : $valor) . " ";
         return $this;
     }
 
-    public function orWhere($llave, $condicion, $valor)
-    {
+    public function orWhere($llave, $condicion, $valor) {
         $this->wheres .= (strpos($this->wheres, "WHERE")) ? " OR " : " WHERE ";
         $this->wheres .= "`$llave` $condicion " . ((is_string($valor)) ? "\"$valor\"" : $valor) . " ";
         return $this;
     }
 
-    private function ejecutar($obj = null)
-    {
+    private function ejecutar($obj = null) {
         $sth = $this->conexion->prepare($this->sql);
         if ($obj !== null) {
             foreach ($obj as $llave => $valor) {
@@ -107,9 +97,9 @@ class Crud
         return $sth->rowCount();
     }
 
-    private function reiniciarValores()
-    {
+    private function reiniciarValores() {
         $this->wheres = "";
         $this->sql = null;
     }
+
 }

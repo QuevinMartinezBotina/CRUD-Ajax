@@ -1,39 +1,33 @@
 <?php
 
-class ControladorUsuarios
-{
+class ControladorUsuarios {
 
-    function __construct()
-    {
+    function __construct() {
+        
     }
 
-    public function insertarUsuario($usuario)
-    {
+    public function insertarUsuario($usuario) {
         $usuarioModel = new Usuarios();
         $id = $usuarioModel->insert($usuario);
-        return [
-            "codigo" => (($id > 0) ? 1 : -1),
-            "mensaje" => ($id > 0) ? "Se ha insertado el usuario correctamente" : "No se pudo insertar el usuario.",
-            "datos" => $id
-        ];
+        $insersionExitosa = ($id > 0);
+        $respuesta = new Respuesta($insersionExitosa ? EMensajes::INSERCION_EXITOSA : EMensajes::ERROR_INSERSION);
+        $respuesta->setDatos($id);
+        return $respuesta;
     }
 
-    public function listarUsuarios()
-    {
+    public function listarUsuarios() {
         $usuarioModel = new Usuarios();
         $lista = $usuarioModel->get();
-        return [
-            "codigo" => ((count($lista) > 0) ? 1 : -1),
-            "mensaje" => ((count($lista) > 0) ? "Se han consultado los registros correctamente." : "No hay registros."),
-            "datos" => $lista
-        ];
+        $v = count($lista);
+        $respuesta = new Respuesta($v ? EMensajes::CORRECTO : EMensajes::ERROR);
+        $respuesta->setDatos($lista);
+        return $respuesta;
     }
 
-    public function actualizarUsuario($usuario)
-    {
+    public function actualizarUsuario($usuario) {
         $usuarioModel = new Usuarios();
         $actualizados = $usuarioModel->where("id", "=", $usuario["idUsuario"])
-            ->update($usuario);
+                ->update($usuario);
         return [
             "codigo" => (($actualizados > 0) ? 1 : -1),
             "mensaje" => ($actualizados > 0) ? "Se ha actualizado el usuario correctamente." : "No se pudo actualizar el usuario.",
@@ -41,8 +35,7 @@ class ControladorUsuarios
         ];
     }
 
-    public function eliminarUsuario($idUsaurio)
-    {
+    public function eliminarUsuario($idUsaurio) {
         $usuarioModel = new Usuarios();
         $eliminados = $usuarioModel->where("id", "=", $idUsaurio)->delete();
         return [
@@ -52,8 +45,7 @@ class ControladorUsuarios
         ];
     }
 
-    public function buscarUsuarioPorId($idUsuario)
-    {
+    public function buscarUsuarioPorId($idUsuario) {
         $usuarioModel = new Usuarios();
         $usuario = $usuarioModel->where("id", "=", $idUsuario)->first();
         return [
@@ -62,4 +54,5 @@ class ControladorUsuarios
             "datos" => $usuario
         ];
     }
+
 }

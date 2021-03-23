@@ -1,6 +1,5 @@
 <?php
 
-
 class Conexion
 {
 
@@ -30,15 +29,12 @@ class Conexion
             $CLAVE = $this->configuracion["password"];
             $CODIFICACION = $this->configuracion["charset"];
 
-
             $url = "{$CONTROLADOR}:host={$SERVIDOR}:{$PUERTO};"
                 . "dbname={$BASE_DATOS};charset={$CODIFICACION}";
             //Se crea la conexión.
             $this->conexion = new PDO($url, $USUARIO, $CLAVE);
-
             return $this->conexion;
         } catch (Exception $exc) {
-
             echo $exc->getTraceAsString();
         }
     }
