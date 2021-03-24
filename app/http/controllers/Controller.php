@@ -1,31 +1,27 @@
 <?php
 
-class Controller
-{
+class Controller {
+
     protected $request;
     private $view;
 
-    function __construct()
-    {
+    function __construct() {
+        
     }
 
-    function view($file, $variables = null)
-    {
+    function view($file, $variables = null) {
         if (empty($this->view)) {
             $this->view = new View();
         }
-
         return $this->view->render($file, $variables);
     }
 
-    function getRequest()
-    {
+    function getRequest() {
         return $this->request;
     }
 
-
-    function setRequest($request)
-    {
+    function setRequest($request) {
         $this->request = $request;
     }
+
 }

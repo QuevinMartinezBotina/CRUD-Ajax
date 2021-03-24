@@ -1,36 +1,30 @@
 <?php
 
-class View
-{
+class View {
 
     protected $variables;
     protected $ouput;
 
-    function __construct()
-    {
+    function __construct() {
+        
     }
 
-    public function  render($file, $variables = null)
-    {
-        if (isset($variables) && is_array($variables)) {
-            $this->variables = $variables;
-        }
-
+    public function render($file, $variables = null) {
+        $this->variables = $variables;
         $file = PATH_VIEWS . $file;
         ob_start();
         $this->includeFile($file);
-        $ouput = ob_get_contents();
+        $output = ob_get_contents();
         ob_end_clean();
-        return $ouput;
+        return $output;
     }
 
-    public function includeFile($file)
-    {
-        /* creamos variables en el teto actual */
+    public function includeFile($file) {
+        //Creamos las variables en el contexto actual...
         if (isset($this->variables) && is_array($this->variables)) {
             foreach ($this->variables as $key => $value) {
                 global ${$key};
-                ${$key} = $values;
+                ${$key} = $value;
             }
         }
 
@@ -42,8 +36,12 @@ class View
         } else
         if (file_exists($file . ".html")) {
             return include $file . ".html";
+        } else
+        if (file_exists($file . ".htm")) {
+            return include $file . ".html";
         } else {
-            echo "<h2>No existe el archivo: $file</h2>";
+            echo "<h2>No existe el archivo: $file</h2><br/>";
         }
     }
+
 }

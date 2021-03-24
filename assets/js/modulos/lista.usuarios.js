@@ -54,7 +54,7 @@ var vista = {
                         + '<td>' + obj.correo + '</td>'
                         + '<td>' + obj.telefono + '</td>'
                         + '<td>'
-                        + '<a href="' + __app.urlTo('/usuarios/form/edicion/' + btoa(obj.id)) + '" class="btn-accion editar">Editar</a>'
+                        + '<a href="javascript:;" class="btn-accion editar">Editar</a>'
                         + '  |  '
                         + '<a href="javascript:;" class="btn-accion eliminar">Eliminar</a>'
                         + '</td>'

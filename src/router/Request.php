@@ -1,21 +1,18 @@
 <?php
 
-class Request
-{
+class Request {
 
     protected $request;
     protected $data;
     public $method;
 
-    public function __construct($request, $flag = true)
-    {
+    public function __construct($request, $flag = true) {
         $this->request = $request;
         $this->extractData();
         $this->setExtraData($flag);
     }
 
-    public function extractData()
-    {
+    public function extractData() {
         $this->data = array();
         foreach ($this->request as $key => $value) {
             if (is_object($value) || is_array($value)) {
@@ -28,8 +25,7 @@ class Request
         }
     }
 
-    public function setExtraData($flag)
-    {
+    public function setExtraData($flag) {
         if ($flag == true) {
             $this->method = $_SERVER["REQUEST_METHOD"];
             $this->data["http_referer"] = isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : null;
@@ -38,18 +34,16 @@ class Request
         }
     }
 
-    public function __get($key)
-    {
+    public function __get($key) {
         return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 
-    public function __set($key, $value)
-    {
+    public function __set($key, $value) {
         $this->data[$key] = $value;
     }
 
-    public function all()
-    {
+    public function all() {
         return $this->data;
     }
+
 }

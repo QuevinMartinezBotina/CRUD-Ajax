@@ -1,3 +1,3 @@
 <?php
 
-require './src/launcher.php';
+require_once './src/launcher.php';
